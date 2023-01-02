@@ -10,7 +10,7 @@ This project modifies mysql 8.0.28 code to monitor the read and write statistics
 
 
 ## Modified Files
-The major modifications are made in the following files. Type `ctrl+f, kyong` to search the related modifications.
+The major modifications are made in the following files. Type keyword `kyong` to search the related modifications.
 
 
 - `storage/innobase/include/srv0srv.h`
