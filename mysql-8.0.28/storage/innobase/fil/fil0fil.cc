@@ -3039,6 +3039,56 @@ bool Fil_shard::open_file(fil_node_t *file) {
   /* We exit with the mutex acquired. The file is assured to remain open only as
   long as the mutex is held. Calls, like to `prepare_file_for_io()` are
   required to continue to use the file with the mutex released. */
+
+  /*kyong - tablespace*/
+	if (strcmp(file->name, "./tpcc/customer.ibd") == 0) {
+		srv_cust_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_cust_space_id);
+	}
+
+	if (strcmp(file->name, "./tpcc/district.ibd") == 0) {
+		srv_dist_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_dist_space_id);
+	}
+
+  if (strcmp(file->name, "./tpcc/history.ibd") == 0) {
+		srv_his_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_his_space_id);
+	}
+
+  if (strcmp(file->name, "./tpcc/item.ibd") == 0) {
+		srv_itm_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_itm_space_id);
+	}
+
+  if (strcmp(file->name, "./tpcc/new_orders.ibd") == 0) {
+		srv_no_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_no_space_id);
+	}
+
+  if (strcmp(file->name, "./tpcc/order_line.ibd") == 0) {
+		srv_ol_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_ol_space_id);
+	}
+
+  if (strcmp(file->name, "./tpcc/orders.ibd") == 0) {
+		srv_or_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_or_space_id);
+	}
+
+  if (strcmp(file->name, "./tpcc/stock.ibd") == 0) {
+		srv_stk_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_stk_space_id);
+	}
+
+	if (strcmp(file->name, "./tpcc/warehouse.ibd") == 0) {
+		srv_wh_space_id = space->id;
+		fprintf(stderr, "setting %s to %lu\n", file->name, srv_wh_space_id);
+	}
+
+	fprintf(stderr, "%s: %lu\n", file->name, space->id);
+  /**/
+  
   return success;
 }
 

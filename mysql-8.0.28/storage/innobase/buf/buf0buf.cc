@@ -3512,7 +3512,47 @@ dberr_t Buf_fetch_normal::get(buf_block_t *&block) noexcept {
 
       /* Now safe to release page_hash S lock. */
       rw_lock_s_unlock(m_hash_lock);
-      break;
+     
+
+      /*kyong - read*/
+      buf_page_t tpcc_page = block->page;
+      if ((unsigned)tpcc_page.space() == srv_cust_space_id){ //customer
+        srv_stats.tpcc_cust_buf_rd.inc();
+      }
+
+      else if ((unsigned)tpcc_page.space() == srv_dist_space_id){ //district
+        srv_stats.tpcc_dist_buf_rd.inc();
+      }
+
+      else if ((unsigned)tpcc_page.space() == srv_his_space_id){ //history
+        srv_stats.tpcc_his_buf_rd.inc();
+      }
+
+      else if ((unsigned)tpcc_page.space() == srv_itm_space_id){ //item
+        srv_stats.tpcc_itm_buf_rd.inc();
+      }
+
+      else if ((unsigned)tpcc_page.space() == srv_no_space_id){ //new orders
+        srv_stats.tpcc_no_buf_rd.inc();
+      }
+
+      else if ((unsigned)tpcc_page.space() == srv_ol_space_id){ //order_line
+        srv_stats.tpcc_ol_buf_rd.inc();
+      }
+
+      else if ((unsigned)tpcc_page.space() == srv_or_space_id){ //orders
+        srv_stats.tpcc_or_buf_rd.inc();
+      }
+
+      else if ((unsigned)tpcc_page.space() == srv_stk_space_id){ //stock
+        srv_stats.tpcc_stk_buf_rd.inc();
+      }
+
+      else if ((unsigned)tpcc_page.space() == srv_wh_space_id){ //warehouse
+        srv_stats.tpcc_wh_buf_rd.inc();
+      }
+      /**/
+       break;
     }
 
     /* Page not in buf_pool: needs to be read from file */

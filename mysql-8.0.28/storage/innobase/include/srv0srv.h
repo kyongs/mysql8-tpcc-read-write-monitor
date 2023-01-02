@@ -74,6 +74,76 @@ struct srv_stats_t {
   typedef ib_counter_t<lint, 1, single_indexer_t> lint_ctr_1_t;
   typedef ib_counter_t<int64_t, 1, single_indexer_t> int64_ctr_1_t;
 
+   /*kyong - read*/
+  ulint_ctr_1_t tpcc_wh_disk_rd;
+  ulint_ctr_1_t tpcc_dist_disk_rd;
+  ulint_ctr_1_t tpcc_cust_disk_rd;
+  ulint_ctr_1_t tpcc_stk_disk_rd;
+  ulint_ctr_1_t tpcc_itm_disk_rd;
+  ulint_ctr_1_t tpcc_or_disk_rd;
+  ulint_ctr_1_t tpcc_no_disk_rd;
+  ulint_ctr_1_t tpcc_ol_disk_rd;
+  ulint_ctr_1_t tpcc_his_disk_rd;
+
+  ulint_ctr_1_t tpcc_wh_buf_rd;
+  ulint_ctr_1_t tpcc_dist_buf_rd;
+  ulint_ctr_1_t tpcc_cust_buf_rd;
+  ulint_ctr_1_t tpcc_stk_buf_rd;
+  ulint_ctr_1_t tpcc_itm_buf_rd;
+  ulint_ctr_1_t tpcc_or_buf_rd;
+  ulint_ctr_1_t tpcc_no_buf_rd;
+  ulint_ctr_1_t tpcc_ol_buf_rd;
+  ulint_ctr_1_t tpcc_his_buf_rd;
+
+  ulint_ctr_1_t tpcc_total_rd;
+  /**/
+
+  /*kyong - write*/
+  //lru write
+  ulint_ctr_1_t tpcc_cust_lru_wr;
+  ulint_ctr_1_t tpcc_dist_lru_wr;
+  ulint_ctr_1_t tpcc_his_lru_wr;
+  ulint_ctr_1_t tpcc_itm_lru_wr;
+  ulint_ctr_1_t tpcc_no_lru_wr;
+  ulint_ctr_1_t tpcc_ol_lru_wr;
+  ulint_ctr_1_t tpcc_or_lru_wr;
+  ulint_ctr_1_t tpcc_stk_lru_wr;
+  ulint_ctr_1_t tpcc_wh_lru_wr;
+
+  //checkpoint write
+  ulint_ctr_1_t tpcc_cust_cp_wr;
+  ulint_ctr_1_t tpcc_dist_cp_wr;
+  ulint_ctr_1_t tpcc_his_cp_wr;
+  ulint_ctr_1_t tpcc_itm_cp_wr;
+  ulint_ctr_1_t tpcc_no_cp_wr;
+  ulint_ctr_1_t tpcc_ol_cp_wr;
+  ulint_ctr_1_t tpcc_or_cp_wr;
+  ulint_ctr_1_t tpcc_stk_cp_wr;
+  ulint_ctr_1_t tpcc_wh_cp_wr;
+
+  //single page write
+  ulint_ctr_1_t tpcc_cust_sp_wr;
+  ulint_ctr_1_t tpcc_dist_sp_wr;
+  ulint_ctr_1_t tpcc_his_sp_wr;
+  ulint_ctr_1_t tpcc_itm_sp_wr;
+  ulint_ctr_1_t tpcc_no_sp_wr;
+  ulint_ctr_1_t tpcc_ol_sp_wr;
+  ulint_ctr_1_t tpcc_or_sp_wr;
+  ulint_ctr_1_t tpcc_stk_sp_wr;
+  ulint_ctr_1_t tpcc_wh_sp_wr;
+
+  //total write
+  ulint_ctr_1_t tpcc_cust_total_wr;
+  ulint_ctr_1_t tpcc_dist_total_wr;
+  ulint_ctr_1_t tpcc_his_total_wr;
+  ulint_ctr_1_t tpcc_itm_total_wr;
+  ulint_ctr_1_t tpcc_no_total_wr;
+  ulint_ctr_1_t tpcc_ol_total_wr;
+  ulint_ctr_1_t tpcc_or_total_wr;
+  ulint_ctr_1_t tpcc_stk_total_wr;
+  ulint_ctr_1_t tpcc_wh_total_wr;
+  /**/
+
   /** Count the amount of data written in total (in bytes) */
   ulint_ctr_1_t data_written;
 
@@ -686,6 +756,18 @@ extern bool srv_stats_include_delete_marked;
 
 extern ulong srv_checksum_algorithm;
 
+/*kyong - tablespace*/
+extern ulint    srv_ol_space_id;
+extern ulint    srv_no_space_id;
+extern ulint    srv_stk_space_id;
+extern ulint    srv_cust_space_id;
+extern ulint    srv_or_space_id;
+extern ulint    srv_dist_space_id;
+extern ulint    srv_wh_space_id;
+extern ulint    srv_itm_space_id;
+extern ulint    srv_his_space_id;
+/**/
+
 extern double srv_max_buf_pool_modified_pct;
 extern ulong srv_max_purge_lag;
 extern ulong srv_max_purge_lag_delay;
@@ -1131,6 +1213,77 @@ struct export_var_t {
 #ifdef UNIV_DEBUG
   ulint innodb_buffer_pool_pages_latched;  /*!< Latched pages */
 #endif                                     /* UNIV_DEBUG */
+
+  /*kyong -read*/
+  ulint tpcc_wh_disk_rd;
+  ulint tpcc_dist_disk_rd;
+  ulint tpcc_cust_disk_rd;
+  ulint tpcc_stk_disk_rd;
+  ulint tpcc_itm_disk_rd;
+  ulint tpcc_or_disk_rd;
+  ulint tpcc_no_disk_rd;
+  ulint tpcc_ol_disk_rd;
+  ulint tpcc_his_disk_rd;
+
+  ulint tpcc_wh_buf_rd;
+  ulint tpcc_dist_buf_rd;
+  ulint tpcc_cust_buf_rd;
+  ulint tpcc_stk_buf_rd;
+  ulint tpcc_itm_buf_rd;
+  ulint tpcc_or_buf_rd;
+  ulint tpcc_no_buf_rd;
+  ulint tpcc_ol_buf_rd;
+  ulint tpcc_his_buf_rd;
+
+  ulint tpcc_total_rd;
+  /**/
+
+  /*kyong - write*/
+  //lru write
+  ulint tpcc_cust_lru_wr;
+  ulint tpcc_dist_lru_wr;
+  ulint tpcc_his_lru_wr;
+  ulint tpcc_itm_lru_wr;
+  ulint tpcc_no_lru_wr;
+  ulint tpcc_ol_lru_wr;
+  ulint tpcc_or_lru_wr;
+  ulint tpcc_stk_lru_wr;
+  ulint tpcc_wh_lru_wr;
+
+  //checkpoint write
+  ulint tpcc_cust_cp_wr;
+  ulint tpcc_dist_cp_wr;
+  ulint tpcc_his_cp_wr;
+  ulint tpcc_itm_cp_wr;
+  ulint tpcc_no_cp_wr;
+  ulint tpcc_ol_cp_wr;
+  ulint tpcc_or_cp_wr;
+  ulint tpcc_stk_cp_wr;
+  ulint tpcc_wh_cp_wr;
+
+  //single page write
+  ulint tpcc_cust_sp_wr;
+  ulint tpcc_dist_sp_wr;
+  ulint tpcc_his_sp_wr;
+  ulint tpcc_itm_sp_wr;
+  ulint tpcc_no_sp_wr;
+  ulint tpcc_ol_sp_wr;
+  ulint tpcc_or_sp_wr;
+  ulint tpcc_stk_sp_wr;
+  ulint tpcc_wh_sp_wr;
+
+  //total write
+  ulint tpcc_cust_total_wr;
+  ulint tpcc_dist_total_wr;
+  ulint tpcc_his_total_wr;
+  ulint tpcc_itm_total_wr;
+  ulint tpcc_no_total_wr;
+  ulint tpcc_ol_total_wr;
+  ulint tpcc_or_total_wr;
+  ulint tpcc_stk_total_wr;
+  ulint tpcc_wh_total_wr;
+  /**/
+
   ulint innodb_buffer_pool_read_requests;  /*!< buf_pool->stat.n_page_gets */
   ulint innodb_buffer_pool_reads;          /*!< srv_buf_pool_reads */
   ulint innodb_buffer_pool_wait_free;      /*!< srv_buf_pool_wait_free */

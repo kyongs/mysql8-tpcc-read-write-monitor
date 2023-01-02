@@ -118,6 +118,44 @@ ulint buf_read_page_low(dberr_t *err, bool sync, ulint type, ulint mode,
     dst = ((buf_block_t *)bpage)->frame;
   }
 
+  /*kyong - read*/
+  if ((unsigned)page_id.space() == srv_cust_space_id){ //customer
+    srv_stats.tpcc_cust_disk_rd.inc();
+  }
+
+  else if ((unsigned)page_id.space() == srv_dist_space_id){ //district
+    srv_stats.tpcc_dist_disk_rd.inc();
+  }
+
+  else if ((unsigned)page_id.space() == srv_his_space_id){ //history
+    srv_stats.tpcc_his_disk_rd.inc();
+  }
+
+  else if ((unsigned)page_id.space() == srv_itm_space_id){ //item
+    srv_stats.tpcc_itm_disk_rd.inc();
+  }
+
+  else if ((unsigned)page_id.space() == srv_no_space_id){ //new orders
+    srv_stats.tpcc_no_disk_rd.inc();
+  }
+
+  else if ((unsigned)page_id.space() == srv_ol_space_id){ //order_line
+    srv_stats.tpcc_ol_disk_rd.inc();
+  }
+
+  else if ((unsigned)page_id.space() == srv_or_space_id){ //orders
+    srv_stats.tpcc_or_disk_rd.inc();
+  }
+
+  else if ((unsigned)page_id.space() == srv_stk_space_id){ //stock
+    srv_stats.tpcc_stk_disk_rd.inc();
+  }
+
+  else if ((unsigned)page_id.space() == srv_wh_space_id){ //warehouse
+    srv_stats.tpcc_wh_disk_rd.inc();
+  }
+  /**/
+
   IORequest request(type | IORequest::READ);
 
   *err = fil_io(request, sync, page_id, page_size, 0, page_size.physical(), dst,

@@ -586,6 +586,19 @@ std::chrono::milliseconds get_srv_replication_delay() {
   return std::chrono::milliseconds{srv_replication_delay};
 }
 
+/*kyong - tablespcae*/
+//declare and iniyialize table space id
+ulint   srv_cust_space_id = 0;
+ulint   srv_dist_space_id = 0;
+ulint   srv_his_space_id = 0;
+ulint   srv_itm_space_id = 0;
+ulint   srv_no_space_id = 0;
+ulint   srv_ol_space_id = 0;
+ulint   srv_or_space_id = 0;
+ulint   srv_stk_space_id = 0;
+ulint   srv_wh_space_id = 0;
+/* end */
+
 /*-------------------------------------------*/
 ulong srv_n_spin_wait_rounds = 30;
 ulong srv_spin_wait_delay = 6;
@@ -1464,6 +1477,183 @@ bool srv_printf_innodb_monitor(FILE *file, bool nowait, ulint *trx_start_pos,
           os_total_large_mem_allocated.load(), dict_sys->size);
 
   buf_print_io(file);
+
+
+  /*kyong - read*/
+  fputs(
+    "-------------------------------\n"
+    "TPCC TABLE PAGE READ HIT/MISS\n"
+    "--------------------------------\n",
+    file);
+  fputs("Customer\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_cust_buf_rd, (ulint)srv_stats.tpcc_cust_disk_rd
+  );
+
+  fputs("District\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+    (ulint)srv_stats.tpcc_dist_buf_rd, (ulint)srv_stats.tpcc_dist_disk_rd
+    );
+
+  fputs("History\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+    (ulint)srv_stats.tpcc_his_buf_rd, (ulint)srv_stats.tpcc_his_disk_rd
+  );
+
+  fputs("Item\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+    (ulint)srv_stats.tpcc_itm_buf_rd, (ulint)srv_stats.tpcc_itm_disk_rd
+  );
+
+  fputs("New Orders\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+    (ulint)srv_stats.tpcc_no_buf_rd, (ulint)srv_stats.tpcc_no_disk_rd
+  );
+
+  fputs("Order Line\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+    (ulint)srv_stats.tpcc_ol_buf_rd, (ulint)srv_stats.tpcc_ol_disk_rd
+  );
+
+  fputs("Orders\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+    (ulint)srv_stats.tpcc_or_buf_rd, (ulint)srv_stats.tpcc_or_disk_rd
+  );
+
+  fputs("Stock\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+    (ulint)srv_stats.tpcc_stk_buf_rd, (ulint)srv_stats.tpcc_stk_disk_rd
+  );
+
+  fputs("Warehouse\n", file);
+  fprintf(file,
+  "Buffer Reads:    " ULINTPF "\n"
+  "Disk Reads:      " ULINTPF "\n\n",
+    (ulint)srv_stats.tpcc_wh_buf_rd, (ulint)srv_stats.tpcc_wh_disk_rd
+  );
+
+  fprintf(file,
+  "Total Reads:    " ULINTPF "\n",
+    (ulint)srv_stats.tpcc_total_rd
+  );
+
+  fputs("---------------------------------\n", file);
+  // buf_print_io(file);
+
+  /*kyong - write*/
+  fputs(
+    "-------------------------------\n"
+    "TPCC TABLE WRITE \n"
+    "--------------------------------\n",
+    file);
+  fputs("Customer\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_cust_lru_wr, (ulint)srv_stats.tpcc_cust_cp_wr,
+   (ulint)srv_stats.tpcc_cust_sp_wr, (ulint)srv_stats.tpcc_cust_total_wr
+  );
+
+  fputs("District\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_dist_lru_wr, (ulint)srv_stats.tpcc_dist_cp_wr,
+   (ulint)srv_stats.tpcc_dist_sp_wr, (ulint)srv_stats.tpcc_dist_total_wr
+  );
+
+  fputs("History\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_his_lru_wr, (ulint)srv_stats.tpcc_his_cp_wr,
+   (ulint)srv_stats.tpcc_his_sp_wr, (ulint)srv_stats.tpcc_his_total_wr
+  );
+  fputs("Item\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_itm_lru_wr, (ulint)srv_stats.tpcc_itm_cp_wr,
+   (ulint)srv_stats.tpcc_itm_sp_wr, (ulint)srv_stats.tpcc_itm_total_wr
+  );
+
+  fputs("New Orders\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_no_lru_wr, (ulint)srv_stats.tpcc_no_cp_wr,
+   (ulint)srv_stats.tpcc_no_sp_wr, (ulint)srv_stats.tpcc_no_total_wr
+  );
+
+  fputs("Order Line\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_ol_lru_wr, (ulint)srv_stats.tpcc_ol_cp_wr,
+   (ulint)srv_stats.tpcc_ol_sp_wr, (ulint)srv_stats.tpcc_ol_total_wr
+  );
+
+  fputs("Orders\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_or_lru_wr, (ulint)srv_stats.tpcc_or_cp_wr,
+   (ulint)srv_stats.tpcc_or_sp_wr, (ulint)srv_stats.tpcc_or_total_wr
+  );
+
+  fputs("Stock\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_stk_lru_wr, (ulint)srv_stats.tpcc_stk_cp_wr,
+   (ulint)srv_stats.tpcc_stk_sp_wr, (ulint)srv_stats.tpcc_stk_total_wr
+  );
+
+  fputs("Warehouse\n", file);
+  fprintf(file,
+  "LRU Writes:             " ULINTPF "\n"
+  "Checkpoint Writes:      " ULINTPF "\n"
+  "Single Page Writes:     " ULINTPF "\n"
+  "Total Writes:           " ULINTPF "\n\n",
+   (ulint)srv_stats.tpcc_wh_lru_wr, (ulint)srv_stats.tpcc_wh_cp_wr,
+   (ulint)srv_stats.tpcc_wh_sp_wr, (ulint)srv_stats.tpcc_wh_total_wr
+  );
+
+  fputs("---------------------------------\n", file);
+  buf_print_io(file);
+/**/
 
   fputs(
       "--------------\n"

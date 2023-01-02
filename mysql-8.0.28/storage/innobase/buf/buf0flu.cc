@@ -1259,6 +1259,152 @@ static void buf_flush_write_block_low(buf_page_t *bpage, buf_flush_t flush_type,
           false /* do not skip lsn check */);
       break;
   }
+  
+  /*kyong - write*/
+  if ((unsigned)bpage->space() == srv_cust_space_id){ //customer
+    //increate write count
+    srv_stats.tpcc_cust_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_cust_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_cust_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_cust_sp_wr.inc();
+    }
+  }
+
+  else if ((unsigned)bpage->space() == srv_dist_space_id){ //district
+    //increate write count
+    srv_stats.tpcc_dist_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_dist_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_dist_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_dist_sp_wr.inc();
+    }
+  }
+
+  else if ((unsigned)bpage->space() == srv_his_space_id){ //history
+    //increate write count
+    srv_stats.tpcc_his_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_his_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_his_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_his_sp_wr.inc();
+    }
+  }
+
+  else if ((unsigned)bpage->space() == srv_itm_space_id){ //item
+    //increate write count
+    srv_stats.tpcc_itm_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_itm_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_itm_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_itm_sp_wr.inc();
+    }
+  }
+
+  else if ((unsigned)bpage->space() == srv_no_space_id){ //new orders
+    //increate write count
+    srv_stats.tpcc_no_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_no_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_no_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_no_sp_wr.inc();
+    }
+  }
+
+  else if ((unsigned)bpage->space() == srv_ol_space_id){ //order_line
+    //increate write count
+    srv_stats.tpcc_ol_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_ol_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_ol_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_ol_sp_wr.inc();
+    }
+  }
+
+  else if ((unsigned)bpage->space() == srv_or_space_id){ //orders
+    //increate write count
+    srv_stats.tpcc_or_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_or_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_or_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_or_sp_wr.inc();
+    }
+  }
+
+  else if ((unsigned)bpage->space() == srv_stk_space_id){ //stock
+    //increate write count
+    srv_stats.tpcc_stk_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_stk_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_stk_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_stk_sp_wr.inc();
+    }
+  }
+
+  else if ((unsigned)bpage->space() == srv_wh_space_id){ //warehouse
+    //increate write count
+    srv_stats.tpcc_wh_total_wr.inc();
+
+    //increase flush type per write
+    if(flush_type == BUF_FLUSH_LRU){
+      srv_stats.tpcc_wh_lru_wr.inc();
+    }
+    else if(flush_type == BUF_FLUSH_LIST){
+      srv_stats.tpcc_wh_cp_wr.inc();
+    }
+    else if (flush_type == BUF_FLUSH_SINGLE_PAGE) {
+      srv_stats.tpcc_wh_sp_wr.inc();
+    }
+  }
+  /**/
 
   dberr_t err = dblwr::write(flush_type, bpage, sync);
 
